@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {TableGrid} from './TableGrid'
+import {TableGrid} from '../Table/TableGrid'
 import {DashboardRow,DashboardCol } from './dashboardType'
 
 const columns:DashboardCol[] = [
-  { dataKey: 'id',field: 'id', label: 'ID', width: 20, hide: true },
+  { dataKey: 'id',field: 'id', label: 'ID', width: 40, hide: true },
   { dataKey: 'firstName',field: 'firstName', label: 'First name', width: 200 },
   { dataKey: 'lastName',field: 'lastName', label: 'Last name', width: 200 },
   {dataKey: 'age',field: 'age',label: 'Age', width: 100},
