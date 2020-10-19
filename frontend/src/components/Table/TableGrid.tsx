@@ -4,9 +4,12 @@ import Paper from '@material-ui/core/Paper';
 import 'react-virtualized/styles.css';
 import { Checkbox } from '@material-ui/core';
 import { AutoSizer, Column, Table } from 'react-virtualized';
-import {DashboardRow,DashboardCol,CellRendererType } from '../Dashboard/dashboardType'
+import {DashboardRow,DashboardCol,CellRendererType } from '../../store/dashboard/types'
 import TableTrashCan from './TableTrashCan'
+import { useDispatch } from 'react-redux'
 import _ from 'lodash';
+import { DeleteLine } from '../../store/dashboard/actions'
+import TableDeleteCheckbox from './TableDeleteCheckbox'
 
 
 interface Props {
@@ -15,30 +18,35 @@ interface Props {
 }
 
 export const TableGrid = React.memo((props: Props)=>{
-  const selectedLinesArr = useRef<number[]>([]);
+  const dispatch = useDispatch()
+  const selectedLinesArr = useRef<string[]>([]);
   const rowHeight= 50;
 
-  const onCheckBoxChange=(rowData:DashboardRow)=>{
-    if (!_.includes(selectedLinesArr.current, rowData.id)) {
-      selectedLinesArr.current.push(rowData.id);
+  const onCheckBoxChange=(rowData:string)=>{
+    if (!_.includes(selectedLinesArr.current, rowData)) {
+      selectedLinesArr.current.push(rowData);
     } else {
-      selectedLinesArr.current=_.remove(selectedLinesArr.current, rowData.id);
+      selectedLinesArr.current=_.remove(selectedLinesArr.current, rowData);
     }
   }
 
   const onDeleteLines=()=>{
-    console.log(`deleting ${selectedLinesArr.current}`)
+    dispatch(
+      DeleteLine(selectedLinesArr.current)
+    )
+    selectedLinesArr.current=[];
   }
 
   const cellRenderer = (cellRenderData:CellRendererType) => {
     const {dataKey,rowData,cellData } = cellRenderData
+    console.error("cellrenderer")
     return (
       <TableCell
         component="div"
         variant="body"
         style={{ height: rowHeight,flex:1,textAlign:'right'}}
       >
-        {(dataKey==='delete')?<Checkbox style={{padding:'0px', float:'right'}} onChange={()=>onCheckBoxChange(rowData)}/>:cellData}
+        {(dataKey==='delete')?<TableDeleteCheckbox selectedLinesArr={selectedLinesArr.current} onCheckBoxChange={onCheckBoxChange} rowId={rowData.id}/>:cellData}
       </TableCell>
     );
   };

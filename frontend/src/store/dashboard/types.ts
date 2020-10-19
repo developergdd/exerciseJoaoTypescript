@@ -1,11 +1,13 @@
-import { TableCellRenderer } from 'react-virtualized';
+export const UPDATE_LINE = 'UPDATE_LINE'
+export const ADD_LINE = 'ADD_LINE'
+export const DELETE_LINE = 'DELETE_LINE'
+export const SET_DASHBOARD = 'SET_DASHBOARD'
 
 export interface DashboardRow {
-    id: number, 
+    id: string, 
     lastName: string, 
     firstName: string, 
-    age: number, 
-    delete:boolean 
+    age: number
 }
 
 export interface DashboardCol {
@@ -23,4 +25,14 @@ export interface CellRendererType{
     isScrolling: boolean,
     rowData: DashboardRow
     rowIndex: number
+}
+
+export interface DashboardData{
+    id: string, 
+    rows:DashboardRow[],
+    columns:DashboardCol[]
+}
+
+export interface DashboardState{
+    dashboard:DashboardData
 }

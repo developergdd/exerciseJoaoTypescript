@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -26,7 +26,7 @@ export const AlertDialog=React.memo((props: Props)=>{
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{props.message}</DialogTitle>
-        {props.dialogType=="question" && <DialogActions>
+        {props.dialogType==="question" && <DialogActions>
           <Button onClick={props.confirmFunction} color="primary" autoFocus>
             {props.confirmButtonText}
           </Button>

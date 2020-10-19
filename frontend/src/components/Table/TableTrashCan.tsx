@@ -3,7 +3,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {AlertDialog} from '../Dialogs/AlertDialog'
 
 interface Props {
-    readonly selectedLinesArr:number[]
+    readonly selectedLinesArr:string[]
     readonly deleteFunction:Function
 }
 export default function TableTrashCan(props: Props) {
