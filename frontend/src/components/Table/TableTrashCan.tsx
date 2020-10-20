@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import {AlertDialog} from '../Dialogs/AlertDialog'
+import {AlertDialog} from '../Generics/Dialogs/AlertDialog'
 
 interface Props {
     readonly selectedLinesArr:string[]

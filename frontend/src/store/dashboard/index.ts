@@ -46,17 +46,17 @@ function dashboardReducer(state = defaultState, action: DashBoardActions): Dashb
 		case SET_DASHBOARD:
 			return { ...state, dashboard: action.dashboard }
 		case UPDATE_LINE:
-			const index = state.dashboard.rows.findIndex(e => e.id === action.id)
+			const updateAddRows = [...state.dashboard.rows]
+			const index = updateAddRows.findIndex(e => e.id === action.line.id)
 			if (index === -1) {
 				return state
 			}
-			let changeRow:DashboardRow ={...state.dashboard.rows[index],[action.property]:action.value}
-
+			updateAddRows[index]=action.line
 			return {
 				...state,
 				dashboard: {
 					...state.dashboard,
-					rows: [...rows,changeRow],
+					rows: updateAddRows,
 				},
 			}
 

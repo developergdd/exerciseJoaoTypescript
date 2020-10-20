@@ -1,6 +1,5 @@
 import { Checkbox } from '@material-ui/core'
 import React,{useState,useEffect} from 'react'
-import _ from 'lodash';
 
 
 interface Props {
@@ -18,10 +17,7 @@ export default function TableDeleteCheckbox(props: Props) {
     };
 
     useEffect(() => {
-        if(!checkboxState)
-        {
-            setCheckboxState(false)
-        }
+        setCheckboxState(false)
      }, [props.rowId])
     
     return(

@@ -19,7 +19,7 @@ export interface DashboardCol {
 }
 
 export interface CellRendererType{
-    cellData: string|number|boolean
+    cellData: string|number|boolean|JSX.Element
     columnIndex: number
     dataKey: string
     isScrolling: boolean,

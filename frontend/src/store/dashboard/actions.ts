@@ -15,12 +15,7 @@ export interface SetDashboardAction {
 
 export interface UpdateLineAction {
 	type: typeof UPDATE_LINE
-	id: string
-	property:
-		'lastName'
-		| 'firstName'
-		| 'age',
-	value: string | number
+	line: DashboardRow
 }
 
 export interface AddLineAction {
@@ -41,18 +36,11 @@ export function SetDashboard(dashboard: DashboardData) {
 }
 
 export function UpdateLine(
-	id: string,
-	property:
-		'lastName'
-		| 'firstName'
-		| 'age',
-	value: string | number,
+	line: DashboardRow
 ) {
 	return {
 		type: UPDATE_LINE,
-		id,
-		property,
-		value,
+		line
 	}
 }
 
