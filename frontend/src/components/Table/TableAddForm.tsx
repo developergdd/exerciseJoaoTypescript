@@ -109,6 +109,7 @@ export const TableAddForm=React.memo((props: Props)=>{
           <Grid container>
             <Grid item xs={12}>
               <TextField
+              autoFocus
                 defaultValue={formData.current.firstName}
                 variant="outlined"
                 label="First Name" 
