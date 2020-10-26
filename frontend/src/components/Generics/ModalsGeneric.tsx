@@ -24,18 +24,9 @@ function getModalStyle() {
     },
   }));
 
-const ModalsGerneric = ({children}) => {
+const ModalsGeneric = ({children}) => {
     const classes = useStyles();
-    //const [open, setOpen] = React.useState(true);
     const [modalStyle] = React.useState(getModalStyle);
-
-    /*const handleOpen = () => {
-        setOpen(true);
-      };
-    
-      const handleClose = () => {
-        setOpen(false);
-      };*/
   return (
       <div>
         <Modal
@@ -53,4 +44,4 @@ const ModalsGerneric = ({children}) => {
   );
 };
 
-export default ModalsGerneric;
+export default ModalsGeneric;
