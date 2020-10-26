@@ -1,5 +1,5 @@
 import { Grid, TextField } from '@material-ui/core'
-import React,{useRef} from 'react';
+import React,{useEffect,useState} from 'react';
 import ModalsGeneric from '../Generics/ModalsGeneric'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -24,83 +24,93 @@ interface Props {
   readonly formType:"Add"|"Edit"
 }
 
-export const TableAddForm=React.memo((props: Props)=>{
+export default function TableAddForm(props: Props){
   const dispatch = useDispatch()
-    const formData = useRef<{firstName:string,lastName:string,age:number}>({firstName:"",lastName:"",age:null});
-    const [confirmButtonDisabled, setConfirmButtonDisabled] = React.useState(true);
+    const [formData, setFormData] = useState({firstName:"",lastName:"",age:null});
     const classes = useStyles();
 
 
     const confirmButtonVisibilityCheck=()=>{
-
-      if((formData.current.firstName==="" || formData.current.lastName==="" || isNaN(formData.current.age)) && !confirmButtonDisabled){
-        return setConfirmButtonDisabled(true);
+      if((formData.firstName==="" || formData.lastName==="" || formData.age==null || isNaN(formData.age))){
+          return true;
       }
 
-      if(props.formType==="Edit" && formData.current.firstName===props.formData.firstName && formData.current.lastName===props.formData.lastName && formData.current.age===props.formData.age && !confirmButtonDisabled)
+      else if(props.formType==="Edit" && formData.firstName===props.formData.firstName && formData.lastName===props.formData.lastName && formData.age===props.formData.age)
       {
-        return setConfirmButtonDisabled(true);
+          return true;
       }
-      if(confirmButtonDisabled)
+      else
       {
-        return setConfirmButtonDisabled(false);
+        return false;
       }
     }
 
-    const handleChange = (event,inputType) => {
+    const handleBlurChange = (event,inputType) => {
       if(inputType==="firstName"){
-        formData.current.firstName=event.target.value;
+        setFormData({
+          ...formData,
+          firstName:event.target.value
+        })
       }
       else if(inputType==="lastName"){
-        formData.current.lastName=event.target.value;
+        setFormData({
+          ...formData,
+          lastName:event.target.value
+        })
       }
       else{
-        formData.current.age=event.target.value;
+        setFormData({
+          ...formData,
+          age:event.target.value
+        })
       }
-      confirmButtonVisibilityCheck();
-      
     };
 
     const onCreateLine=()=>{
       dispatch(
         AddNewLine({
           id:"new",
-          firstName:formData.current.firstName,
-          lastName:formData.current.lastName,
-          age:formData.current.age
+          firstName:formData.firstName,
+          lastName:formData.lastName,
+          age:formData.age
         })
       )
       props.onCloseForm()
     }
 
     const onEditLine=()=>{
+      //console.log(formData.current)
       dispatch(
         UpdateLine({
           id:props.formData.id,
-          firstName:formData.current.firstName,
-          lastName:formData.current.lastName,
-          age:formData.current.age
+          firstName:formData.firstName,
+          lastName:formData.lastName,
+          age:formData.age
         })
       )
       props.onCloseForm()
     }
 
-    //Set Default Values
+    
+
+    useEffect(() => {
+      //Set Default Values
     if(props.formType==="Add"){
-      formData.current={
+      setFormData({
         firstName:"",
         lastName:"",
         age:null
-      }
+      })
     }
     else
     {
-      formData.current={
+      setFormData({
         firstName:props.formData.firstName,
         lastName:props.formData.lastName,
         age:props.formData.age
-      }
+      })
     }
+   }, [props.formData,props.formType])
 
     return (
       <ModalsGeneric>
@@ -110,28 +120,28 @@ export const TableAddForm=React.memo((props: Props)=>{
             <Grid item xs={12}>
               <TextField
               autoFocus
-                defaultValue={formData.current.firstName}
+                defaultValue={formData.firstName}
                 variant="outlined"
                 label="First Name" 
-                onChange={(e)=>handleChange(e,"firstName")}
+                onBlur={(e)=>handleBlurChange(e,"firstName")}
               >
               </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                defaultValue={formData.current.lastName}
+                defaultValue={formData.lastName}
                 variant="outlined"
                 label="Last Name" 
-                onChange={(e)=>handleChange(e,"lastName")}
+                onBlur={(e)=>handleBlurChange(e,"lastName")}
               >
               </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                defaultValue={formData.current.age}
+                defaultValue={formData.age}
                 variant="outlined"
                 label="Age" 
-                onChange={(e)=>handleChange(e,"age")}
+                onBlur={(e)=>handleBlurChange(e,"age")}
               >
               </TextField>
             </Grid>
@@ -142,7 +152,7 @@ export const TableAddForm=React.memo((props: Props)=>{
             >
               <Button
                 variant="contained"
-                disabled={confirmButtonDisabled}
+                disabled={confirmButtonVisibilityCheck()}
                 onClick={() => {
                   if(props.formType==="Add"){
                     onCreateLine();
@@ -173,4 +183,4 @@ export const TableAddForm=React.memo((props: Props)=>{
         </div>
       </ModalsGeneric>      
     )
-})
+}

@@ -1,9 +1,9 @@
 import React, { useState,useEffect,useRef } from 'react';
-import {TableGrid} from '../Table/TableGrid'
+import TableGrid from '../Table/TableGrid'
 import { DashboardRow, DashboardState } from '../../store/dashboard/types'
 import { useSelector } from 'react-redux'
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
-import {TableAddForm} from '../Table/TableAddForm'
+import TableAddForm from '../Table/TableAddForm'
 
 
 export default function Dashboard() {

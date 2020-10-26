@@ -18,7 +18,7 @@ interface Props {
   readonly showEditForm: Function
 }
 
-export const TableGrid = React.memo((props: Props)=>{
+export default function TableGrid (props: Props){
   const dispatch = useDispatch()
   const selectedLinesArr = useRef<string[]>([]);
   const rowHeight= 50;
@@ -110,4 +110,4 @@ export const TableGrid = React.memo((props: Props)=>{
         </AutoSizer>
         </Paper>
     );
-})
+}

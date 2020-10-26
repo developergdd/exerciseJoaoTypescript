@@ -16,7 +16,7 @@ interface Props {
     readonly cancelFunction?: () => void
 }
 
-export const AlertDialog=React.memo((props: Props)=>{
+export default function AlertDialog(props: Props){
 
   return (
     <div>
@@ -37,4 +37,4 @@ export const AlertDialog=React.memo((props: Props)=>{
       </Dialog>
     </div>
   );
-})
+}

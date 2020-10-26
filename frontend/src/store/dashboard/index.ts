@@ -77,8 +77,6 @@ function dashboardReducer(state = defaultState, action: DashBoardActions): Dashb
 			}
 		case DELETE_LINE:
 			const newRows = [...state.dashboard.rows]
-			console.error(action.idsArray);
-			console.error(action.idsArray.length);
 			for (const id of action.idsArray) {
 				const index = newRows.findIndex(e => e.id === id)
 				if (index !== -1) {
