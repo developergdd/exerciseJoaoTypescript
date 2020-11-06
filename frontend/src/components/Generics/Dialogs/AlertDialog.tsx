@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -23,7 +24,7 @@ export const AlertDialog = ({
   cancelButtonText,
   confirmFunction,
   cancelFunction,
-}: Props) => (
+}: Props):JSX.Element => (
 
   <div>
     <Dialog

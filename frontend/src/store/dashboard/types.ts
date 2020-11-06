@@ -1,7 +1,7 @@
-export const UPDATE_LINE = 'UPDATE_LINE';
-export const ADD_LINE = 'ADD_LINE';
-export const DELETE_LINE = 'DELETE_LINE';
-export const SET_DASHBOARD = 'SET_DASHBOARD';
+export const UPDATE_LINE = 'UPDATE_LINE'
+export const ADD_LINE = 'ADD_LINE'
+export const DELETE_LINE = 'DELETE_LINE'
+export const SET_DASHBOARD = 'SET_DASHBOARD'
 
 export interface DashboardRow {
     id: string,

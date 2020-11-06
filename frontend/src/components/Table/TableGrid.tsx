@@ -1,58 +1,58 @@
-import React, { useRef } from 'react';
-import TableCell from '@material-ui/core/TableCell';
-import Paper from '@material-ui/core/Paper';
-import 'react-virtualized/styles.css';
-import { AutoSizer, Column, Table } from 'react-virtualized';
-import { useDispatch } from 'react-redux';
-import _ from 'lodash';
-import EditIcon from '@material-ui/icons/Edit';
-import { DashboardRow, DashboardCol, CellRendererType } from '../../store/dashboard/types';
-import TableTrashCan from './TableTrashCan';
-import { DeleteLine } from '../../store/dashboard/actions';
-import TableDeleteCheckbox from './TableDeleteCheckbox';
+import React, { useRef } from 'react'
+import TableCell from '@material-ui/core/TableCell'
+import Paper from '@material-ui/core/Paper'
+import 'react-virtualized/styles.css'
+import { AutoSizer, Column, Table } from 'react-virtualized'
+import { useDispatch } from 'react-redux'
+import _ from 'lodash'
+import EditIcon from '@material-ui/icons/Edit'
+import { DashboardRow, DashboardCol, /*CellRendererType*/ } from '../../store/dashboard/types'
+import TableTrashCan from './TableTrashCan'
+import { DeleteLine } from '../../store/dashboard/actions'
+import TableDeleteCheckbox from './TableDeleteCheckbox'
 
 interface Props {
   readonly rows:DashboardRow[]
   readonly columns:DashboardCol[]
-  readonly showEditForm: Function
+  readonly showEditForm: (rowData:DashboardRow) => void;
 }
 
-const TableGrid = ({ rows, columns, showEditForm }: Props) => {
-  const dispatch = useDispatch();
-  const selectedLinesArr = useRef<string[]>([]);
-  const rowHeight = 50;
+const TableGrid = ({ rows, columns, showEditForm }: Props):JSX.Element => {
+  const dispatch = useDispatch()
+  const selectedLinesArr = useRef<string[]>([])
+  const rowHeight = 50
 
   const onCheckBoxChange = (rowData:string) => {
     if (!_.includes(selectedLinesArr.current, rowData)) {
-      selectedLinesArr.current.push(rowData);
+      selectedLinesArr.current.push(rowData)
     } else {
-      selectedLinesArr.current = _.remove(selectedLinesArr.current, rowData);
+      selectedLinesArr.current = _.remove(selectedLinesArr.current, rowData)
     }
-  };
+  }
 
   const onDeleteLines = () => {
     dispatch(
       DeleteLine(selectedLinesArr.current),
-    );
-    selectedLinesArr.current = [];
-  };
+    )
+    selectedLinesArr.current = []
+  }
 
-  const cellRenderer = (cellRenderData:CellRendererType) => {
-    const { dataKey, rowData } = cellRenderData;
-    let { cellData } = cellRenderData;
+  const cellRenderer = (cellRenderData:any/*CellRendererType*/):JSX.Element => {
+    const { dataKey, rowData } = cellRenderData
+    let { cellData } = cellRenderData
     if (dataKey === 'id') {
       cellData = (
         <EditIcon
           onClick={() => showEditForm(rowData)}
         />
-      );
+      )
     } else if (dataKey === 'delete') {
       cellData = (
         <TableDeleteCheckbox
           onCheckBoxChange={onCheckBoxChange}
           rowId={rowData.id}
         />
-      );
+      )
     }
 
     return (
@@ -63,14 +63,14 @@ const TableGrid = ({ rows, columns, showEditForm }: Props) => {
       >
         {cellData}
       </TableCell>
-    );
-  };
+    )
+  }
 
-  const headerRenderer = (headerRenderProps:{label:string, dataKey:string}) => {
-    const { dataKey } = headerRenderProps;
-    let { label } = headerRenderProps;
+  const headerRenderer = (headerRenderProps:any):JSX.Element => {
+    const { dataKey } = headerRenderProps
+    let { label } = headerRenderProps
     if (dataKey === 'id') {
-      label = '';
+      label = ''
     }
     return (
       <TableCell
@@ -80,12 +80,12 @@ const TableGrid = ({ rows, columns, showEditForm }: Props) => {
       >
         {(dataKey === 'delete') ? <TableTrashCan deleteFunction={onDeleteLines} selectedLinesArr={selectedLinesArr.current} /> : label}
       </TableCell>
-    );
-  };
+    )
+  }
   return (
     <Paper style={{ height: 200, width: '100%' }}>
       <AutoSizer>
-        {({ height, width }) => (
+        {({ height, width }): JSX.Element => (
           <Table
             rowCount={rows.length}
             rowGetter={({ index }) => rows[index]}
@@ -99,7 +99,7 @@ const TableGrid = ({ rows, columns, showEditForm }: Props) => {
           >
             {columns.map(({
               dataKey, width: colWidth, label,
-            }) => (
+            }): any => (
               <Column
                 key={dataKey}
                 headerRenderer={headerRenderer}
@@ -115,7 +115,7 @@ const TableGrid = ({ rows, columns, showEditForm }: Props) => {
         )}
       </AutoSizer>
     </Paper>
-  );
-};
+  )
+}
 
-export default TableGrid;
+export default TableGrid

@@ -1,33 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
-import TableGrid from '../Table/TableGrid';
-import { DashboardRow, DashboardState } from '../../store/dashboard/types';
-import TableAddForm from '../Table/TableAddForm';
+import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded'
+import TableGrid from '../Table/TableGrid'
+import { DashboardRow, DashboardState } from '../../store/dashboard/types'
+import { AppState } from '../../store'
+import TableAddForm from '../Table/TableAddForm'
 
-export default function Dashboard() {
-  const dashboardData:DashboardState = useSelector((state: DashboardState) => state.dashboard);
-  const [rows, setRows] = useState<DashboardRow[]>(dashboardData.dashboard.rows);
-  const [addFormVisibility, setAddFormVisibility] = useState(false);
-  const addFormData = useRef<DashboardRow>();
-  const formType = useRef<'Add'|'Edit'>('Add');
+export default function Dashboard():JSX.Element|null {
+  const dashboardData:DashboardState = useSelector((state: AppState) => state.dashboard)
+  const [rows, setRows] = useState<DashboardRow[]>(dashboardData.dashboard.rows)
+  const [addFormVisibility, setAddFormVisibility] = useState(false)
+  const addFormData = useRef<DashboardRow>()
+  const formType = useRef<'Add'|'Edit'>('Add')
 
   useEffect(() => {
-    setRows(dashboardData.dashboard.rows);
-  }, [dashboardData.dashboard.rows]);
+    setRows(dashboardData.dashboard.rows)
+  }, [dashboardData.dashboard.rows])
 
   const onCloseFunction = (() => {
-    setAddFormVisibility(false);
-  });
+    setAddFormVisibility(false)
+  })
 
   const showEditForm = ((rowData:DashboardRow) => {
-    addFormData.current = rowData;
-    formType.current = 'Edit';
-    setAddFormVisibility(true);
-  });
+    addFormData.current = rowData
+    formType.current = 'Edit'
+    setAddFormVisibility(true)
+  })
 
   if (rows.length === 0) {
-    return null;
+    return null
   }
   return (
     <div style={{ marginTop: '20px' }}>
@@ -36,7 +37,7 @@ export default function Dashboard() {
         columns={dashboardData.dashboard.columns}
         showEditForm={showEditForm}
       />
-      <AddCircleRoundedIcon fontSize="large" htmlColor="green" onClick={() => { formType.current = 'Add'; setAddFormVisibility(true); }} />
+      <AddCircleRoundedIcon fontSize="large" htmlColor="green" onClick={() => { formType.current = 'Add'; setAddFormVisibility(true) }} />
       {addFormVisibility
         && (
         <TableAddForm
@@ -47,5 +48,5 @@ export default function Dashboard() {
         )}
     </div>
 
-  );
+  )
 }

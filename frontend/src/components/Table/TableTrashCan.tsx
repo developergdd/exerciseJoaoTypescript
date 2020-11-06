@@ -1,12 +1,13 @@
+/* eslint-disable semi */
 import React, { useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AlertDialog from '../Generics/Dialogs/AlertDialog';
 
 interface Props {
     readonly selectedLinesArr:string[]
-    readonly deleteFunction:Function
+    readonly deleteFunction:() => void;
 }
-const TableTrashCan = (props: Props) => {
+const TableTrashCan = (props: Props):JSX.Element => {
   const [deleteWindowState, setDeleteWindowState] = useState<boolean>(false);
 
   const onTrashCanClick = () => {

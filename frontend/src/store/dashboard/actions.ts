@@ -5,7 +5,7 @@ import {
   ADD_LINE,
   DashboardRow,
   DELETE_LINE,
-} from './types';
+} from './types'
 
 export interface SetDashboardAction {
   type: typeof SET_DASHBOARD
@@ -27,38 +27,36 @@ export interface DeleteLineAction {
   idsArray: string[]
 }
 
-export function SetDashboard(dashboard: DashboardData) {
+export const SetDashboard = (dashboard: DashboardData):SetDashboardAction => {
   return {
     type: SET_DASHBOARD,
     dashboard,
-  };
+  }
 }
 
-export function UpdateLine(
-  line: DashboardRow,
-) {
+export const UpdateLine = (line: DashboardRow):UpdateLineAction => {
   return {
     type: UPDATE_LINE,
     line,
-  };
+  }
 }
 
-export function AddNewLine(line: DashboardRow) {
+export const AddNewLine = (line: DashboardRow):AddLineAction => {
   return {
     type: ADD_LINE,
     line,
-  };
+  }
 }
 
 /**
  * Deletes multiple tasks at once
  * @param lineIds
  */
-export function DeleteLine(lineIds: string[]) {
+export const DeleteLine = (lineIds: string[]):DeleteLineAction => {
   return {
     type: DELETE_LINE,
     idsArray: lineIds,
-  };
+  }
 }
 
 export type DashBoardActions =

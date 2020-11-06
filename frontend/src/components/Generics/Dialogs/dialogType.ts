@@ -1,1 +1,1 @@
-export type DialogType = "alert" | "question"
+export type DialogType = 'alert' | 'question'
