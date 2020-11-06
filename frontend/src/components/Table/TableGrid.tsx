@@ -17,7 +17,7 @@ interface Props {
   readonly showEditForm: Function
 }
 
-export const TableGrid = ({ rows, columns, showEditForm }: Props) => {
+const TableGrid = ({ rows, columns, showEditForm }: Props) => {
   const dispatch = useDispatch();
   const selectedLinesArr = useRef<string[]>([]);
   const rowHeight = 50;

@@ -6,7 +6,7 @@ interface Props {
     readonly selectedLinesArr:string[]
     readonly deleteFunction:Function
 }
-export default function TableTrashCan(props: Props) {
+const TableTrashCan = (props: Props) => {
   const [deleteWindowState, setDeleteWindowState] = useState<boolean>(false);
 
   const onTrashCanClick = () => {
@@ -39,4 +39,6 @@ export default function TableTrashCan(props: Props) {
     </div>
 
   );
-}
+};
+
+export default TableTrashCan;

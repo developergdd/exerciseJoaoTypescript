@@ -5,7 +5,7 @@ interface Props {
     readonly onCheckBoxChange:Function
     readonly rowId:string
 }
-export default function TableDeleteCheckbox({ rowId, onCheckBoxChange }: Props) {
+const TableDeleteCheckbox = ({ rowId, onCheckBoxChange }: Props) => {
   const [checkboxState, setCheckboxState] = useState<boolean>(false);
 
   const handleCheckboxState = () => {
@@ -23,4 +23,6 @@ export default function TableDeleteCheckbox({ rowId, onCheckBoxChange }: Props) 
     </div>
 
   );
-}
+};
+
+export default TableDeleteCheckbox;

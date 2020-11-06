@@ -23,7 +23,7 @@ interface Props {
   readonly formType:'Add'|'Edit'
 }
 
-export default function TableAddForm({ onCloseForm, receivedFormData, formType }: Props) {
+const TableAddForm = ({ onCloseForm, receivedFormData, formType }: Props) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ firstName: '', lastName: '', age: null });
   const classes = useStyles();
@@ -172,4 +172,6 @@ export default function TableAddForm({ onCloseForm, receivedFormData, formType }
       </div>
     </ModalsGeneric>
   );
-}
+};
+
+export default TableAddForm;
