@@ -29,14 +29,13 @@ const TableAddForm = ({ onCloseForm, receivedFormData, formType }: Props):JSX.El
   const classes = useStyles()
 
   const confirmButtonVisibilityCheck = () => {
-    if ((formData.firstName === '' || formData.lastName === '' || formData.age !== 0)) {
+    if ((formData.firstName === '' || formData.lastName === '' || formData.age === 0)) {
       return true
     }
 
     if (formType === 'Edit' && receivedFormData && formData.firstName === receivedFormData.firstName && formData.lastName === receivedFormData.lastName && formData.age === receivedFormData.age) {
       return true
     }
-
     return false
   }
 
