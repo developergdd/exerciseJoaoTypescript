@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import dashboard from './dashboard/index';
 
-import dashboard from './dashboard'
 export const rootReducer = combineReducers({
-    dashboard
-})
+  dashboard,
+});
 
-export type AppState = ReturnType<typeof rootReducer>
+export type AppState = ReturnType<typeof rootReducer>;

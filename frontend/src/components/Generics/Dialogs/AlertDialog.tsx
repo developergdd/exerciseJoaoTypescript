@@ -3,8 +3,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {DialogType} from './dialogType'
-
+import { DialogType } from './dialogType';
 
 interface Props {
     readonly dialogType:DialogType,
@@ -16,25 +15,43 @@ interface Props {
     readonly cancelFunction?: () => void
 }
 
-export default function AlertDialog(props: Props){
+export const AlertDialog = ({
+  dialogType,
+  visibility,
+  message,
+  confirmButtonText,
+  cancelButtonText,
+  confirmFunction,
+  cancelFunction,
+}: Props) => (
 
-  return (
-    <div>
-      <Dialog
-        open={props.visibility}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{props.message}</DialogTitle>
-        {props.dialogType==="question" && <DialogActions>
-          <Button onClick={props.confirmFunction} color="primary" autoFocus>
-            {props.confirmButtonText}
+  <div>
+    <Dialog
+      open={visibility}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{message}</DialogTitle>
+      {dialogType === 'question' && (
+        <DialogActions>
+          <Button onClick={confirmFunction} color="primary" autoFocus>
+            {confirmButtonText}
           </Button>
-          <Button onClick={props.cancelFunction} color="primary">
-            {props.cancelButtonText}
+          <Button onClick={cancelFunction} color="primary">
+            {cancelButtonText}
           </Button>
-        </DialogActions>}
-      </Dialog>
-    </div>
-  );
-}
+        </DialogActions>
+      )}
+    </Dialog>
+  </div>
+);
+
+AlertDialog.defaultProps = {
+  confirmButtonText: '',
+  cancelButtonText: '',
+  confirmFunction: null,
+  cancelFunction: null,
+
+};
+
+export default AlertDialog;

@@ -1,5 +1,5 @@
 import * as express from "express";
-import { connect } from "./src/database/database"
+import { connect } from "./database/database"
 const app = express();
 const port = 5000;
 connect();
