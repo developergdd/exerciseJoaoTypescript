@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import ModalsGeneric from '../Generics/ModalsGeneric'
 import { AddNewLine, UpdateLine } from '../../store/dashboard/actions'
 import { DashboardRow } from '../../store/dashboard/types'
+import fetch from 'unfetch'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,29 +59,65 @@ const TableAddForm = ({ onCloseForm, receivedFormData, formType }: Props):JSX.El
     }
   }
 
-  const onCreateLine = () => {
-    dispatch(
+  const createLineServer = async () => {
+    const createLineObj = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      age: formData.age
+    }
+    await fetch(`${'http://localhost:5000/createProject'}/`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify(createLineObj)
+    })
+    .then(r => r.json())
+    .then(data => dispatch(
       AddNewLine({
-        id: 'new',
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        age: formData.age,
+        _id: data._id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        age: data.age,
       }),
-    )
+    ))
+  }
+
+  const onCreateLine = () => {
+    createLineServer()
     onCloseForm()
   }
 
-  const onEditLine = () => {
+  const editLineServer = async () => {
     if (!receivedFormData) { return }
+    const editLineObj = {
+      id: receivedFormData._id,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      age: formData.age
+    }
+    const response = await fetch(`${'http://localhost:5000/updateProject'}/`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify(editLineObj)
+    })
+      if (response.ok) {
+        dispatch(
+          UpdateLine({
+            _id: receivedFormData._id,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            age: formData.age,
+          }),
+        )
+      }
+  }
+
+  const onEditLine = () => {
     // console.log(formData.current)
-    dispatch(
-      UpdateLine({
-        id: receivedFormData.id,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        age: formData.age,
-      }),
-    )
+    editLineServer()
     onCloseForm()
   }
 

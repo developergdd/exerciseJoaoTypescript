@@ -1,6 +1,6 @@
 import * as Mongoose from "mongoose";
-const config = require('config');
 import { UserModel } from "./users/users.model";
+import { ProjectModel } from "./project/project.model";
 let database: Mongoose.Connection;
 //"mongoURI": "mongodb+srv://testuser123:2016rmjyJP@cluster0.7osxm.mongodb.net/<dbname>?retryWrites=true&w=majority"
 
@@ -28,6 +28,7 @@ export const connect = () => {
 
   return {
     UserModel,
+    ProjectModel
   };
 };
 export const disconnect = () => {

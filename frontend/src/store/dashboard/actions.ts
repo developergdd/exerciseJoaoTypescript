@@ -1,6 +1,5 @@
 import {
   SET_DASHBOARD,
-  DashboardData,
   UPDATE_LINE,
   ADD_LINE,
   DashboardRow,
@@ -9,7 +8,7 @@ import {
 
 export interface SetDashboardAction {
   type: typeof SET_DASHBOARD
-  dashboard: DashboardData
+  dashboard: DashboardRow[]
 }
 
 export interface UpdateLineAction {
@@ -27,7 +26,7 @@ export interface DeleteLineAction {
   idsArray: string[]
 }
 
-export const SetDashboard = (dashboard: DashboardData):SetDashboardAction => {
+export const SetDashboard = (dashboard: DashboardRow[]):SetDashboardAction => {
   return {
     type: SET_DASHBOARD,
     dashboard,

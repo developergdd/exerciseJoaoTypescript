@@ -4,7 +4,7 @@ export const DELETE_LINE = 'DELETE_LINE'
 export const SET_DASHBOARD = 'SET_DASHBOARD'
 
 export interface DashboardRow {
-    id: string,
+    _id: string,
     lastName: string,
     firstName: string,
     age: number

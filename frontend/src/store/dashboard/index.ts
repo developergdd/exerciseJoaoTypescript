@@ -6,8 +6,7 @@ import {
   ADD_LINE,
   DELETE_LINE,
   DashboardCol,
-  DashboardRow,
-} from './types'
+  DashboardRow } from './types'
 import { DashBoardActions } from './actions'
 
 const columns:DashboardCol[] = [
@@ -28,35 +27,7 @@ const columns:DashboardCol[] = [
   },
 ]
 
-const rows:DashboardRow[] = [
-  {
-    id: '1', lastName: 'Snow', firstName: 'Jon', age: 35,
-  },
-  {
-    id: '2', lastName: 'Lannister', firstName: 'Cersei', age: 42,
-  },
-  {
-    id: '3', lastName: 'Lannister', firstName: 'Jaime', age: 45,
-  },
-  {
-    id: '4', lastName: 'Stark', firstName: 'Arya', age: 16,
-  },
-  {
-    id: '5', lastName: 'Targaryen', firstName: 'Daenerys', age: 25,
-  },
-  {
-    id: '6', lastName: 'Melisandre', firstName: 'Teste', age: 150,
-  },
-  {
-    id: '7', lastName: 'Clifford', firstName: 'Ferrara', age: 44,
-  },
-  {
-    id: '8', lastName: 'Frances', firstName: 'Rossini', age: 36,
-  },
-  {
-    id: '9', lastName: 'Roxie', firstName: 'Harvey', age: 65,
-  },
-]
+const rows:DashboardRow[] = []
 
 const Dashboard:DashboardData = {
   id: '1',
@@ -72,16 +43,24 @@ function dashboardReducer(state = defaultState, action: DashBoardActions): Dashb
   switch (action.type) {
     case SET_DASHBOARD:
     {
-      return { ...state, dashboard: action.dashboard }
+      const dashboardData:DashboardData = Dashboard
+      console.log('set dashboard')
+      if (dashboardData.rows !== action.dashboard) {
+        dashboardData.rows = action.dashboard
+        return { ...state, dashboard: dashboardData }
+      } 
+      return state
     }
     case UPDATE_LINE:
     {
+      console.log('updateline')
       const updateAddRows = [...state.dashboard.rows]
-      const index = updateAddRows.findIndex((e) => e.id === action.line.id)
+      const index = updateAddRows.findIndex((e) => e._id === action.line._id)
       if (index === -1) {
         return state
       }
       updateAddRows[index] = action.line
+      console.log(updateAddRows)
       return {
         ...state,
         dashboard: {
@@ -93,7 +72,7 @@ function dashboardReducer(state = defaultState, action: DashBoardActions): Dashb
     case ADD_LINE:
     {
       const newAddRows = [...state.dashboard.rows]
-      const exists = newAddRows.some((e) => e.id === action.line.id)
+      const exists = newAddRows.some((e) => e._id === action.line._id)
       if (exists) {
         return state
       }
@@ -111,7 +90,7 @@ function dashboardReducer(state = defaultState, action: DashBoardActions): Dashb
     {
       const newRows = [...state.dashboard.rows]
       action.idsArray.forEach((id) => {
-        const index = newRows.findIndex((e) => e.id === id)
+        const index = newRows.findIndex((e) => e._id === id)
         if (index !== -1) {
           newRows.splice(index, 1)
         }

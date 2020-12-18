@@ -10,6 +10,7 @@ import { DashboardRow, DashboardCol, /*CellRendererType*/ } from '../../store/da
 import TableTrashCan from './TableTrashCan'
 import { DeleteLine } from '../../store/dashboard/actions'
 import TableDeleteCheckbox from './TableDeleteCheckbox'
+import fetch from 'unfetch'
 
 interface Props {
   readonly rows:DashboardRow[]
@@ -29,11 +30,24 @@ const TableGrid = ({ rows, columns, showEditForm }: Props):JSX.Element => {
       selectedLinesArr.current = _.remove(selectedLinesArr.current, rowData)
     }
   }
-
+  const deleteLineServer = async (id:string) => {
+    const response = await fetch(`${'http://localhost:5000/deleteProject'}/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      }
+    })
+      if (response.ok) {
+        dispatch(
+          DeleteLine([id]),
+        )
+      }
+  }
   const onDeleteLines = () => {
-    dispatch(
-      DeleteLine(selectedLinesArr.current),
-    )
+    for (let a = 0; a < selectedLinesArr.current.length; a++) {
+      deleteLineServer(selectedLinesArr.current[a])
+    }
+    
     selectedLinesArr.current = []
   }
 
@@ -50,7 +64,7 @@ const TableGrid = ({ rows, columns, showEditForm }: Props):JSX.Element => {
       cellData = (
         <TableDeleteCheckbox
           onCheckBoxChange={onCheckBoxChange}
-          rowId={rowData.id}
+          rowId={rowData._id}
         />
       )
     }
